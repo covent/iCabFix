@@ -4033,6 +4033,23 @@ function rcube_webmail()
       numfiles += files;
     });
 
+
+
+    if (!numfiles) 
+	{
+		//check weather form has been processed by icab browser ,
+		$('input', form).each(function(i, field) {
+			if($(this).val().split("§§§").length>1)
+			{
+			//if the input element contains a string which contains §§§, the form has been processed by icab browser
+			//and the input contains a filename.. So increase filename counter..
+			numfiles++;
+			//alert($(this).val() + "***" + $(this).attr('type') + "***" + i + "***" + field.files);
+			}
+		});
+	}
+	
+	
     // create hidden iframe and post upload form
     if (numfiles) {
       if (this.env.max_filesize && this.env.filesizeerror && size > this.env.max_filesize) {
